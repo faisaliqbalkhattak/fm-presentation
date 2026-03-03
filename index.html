@@ -185,25 +185,6 @@
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .result-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .result-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary-color);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .result-card:hover { transform: translateY(-5px); }
-        .result-card h3 { color: var(--text-color); font-size: 1.2rem; margin-bottom: 10px; }
-        .result-card p { font-size: 1rem; color: var(--text-light); margin: 0; opacity: 1; transform: none; }
-
         .flow-step { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; }
         .flow-number {
             width: 40px; height: 40px; border-radius: 50%;
@@ -222,33 +203,6 @@
         .comparison-table th:last-child { border-radius: 0 8px 0 0; }
         .comparison-table td { padding: 12px 16px; border-bottom: 1px solid #dee2e6; font-size: 1rem; }
         .comparison-table tr:hover { background: #f8f9fa; }
-
-        .demo-container {
-            background: #2d2d2d; border-radius: 10px; padding: 20px;
-            margin-top: 15px; color: #dcdcdc;
-            font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 0.95rem; min-height: 360px; position: relative;
-        }
-        .demo-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; border-bottom: 1px solid #555; padding-bottom: 10px;
-        }
-        .demo-title { color: #61dafb; font-weight: bold; font-size: 1.1rem; }
-        .demo-btn {
-            background: var(--primary-color); color: white; border: none;
-            padding: 8px 18px; border-radius: 6px; cursor: pointer;
-            font-size: 0.9rem; font-family: inherit; transition: background 0.2s;
-        }
-        .demo-btn:hover { background: #004494; }
-        .demo-btn:disabled { background: #555; cursor: not-allowed; }
-        .demo-log { white-space: pre-wrap; line-height: 1.6; max-height: 280px; overflow-y: auto; }
-        .demo-log .step-conflict { color: #ff6b6b; }
-        .demo-log .step-learn { color: #ffd43b; }
-        .demo-log .step-decide { color: #69db7c; }
-        .demo-log .step-propagate { color: #a9e34b; }
-        .demo-log .step-backtrack { color: #e599f7; }
-        .demo-log .step-sat { color: #51cf66; font-weight: bold; }
-        .demo-log .step-info { color: #74c0fc; }
     </style>
 </head>
 <body>
@@ -263,350 +217,141 @@
         <div class="content-box" style="text-align: center;">
             <h1>CaDiCaL SAT Solver</h1>
             <p style="font-size: 1.4rem; color: var(--text-light); margin-bottom: 0.5rem;">
-                A Modern CDCL-Based Satisfiability Solver
+                A Modern SAT Solver Built for Speed and Simplicity
             </p>
-            <p><strong>Course:</strong> Formal Methods | <strong>Version Analyzed:</strong> CaDiCaL 2.0 / 3.0</p>
+            <p><strong>Course:</strong> Formal Methods (CS-320)</p>
 
             <div style="margin-top: 2rem;">
                 <h3>Group Members</h3>
                 <ul style="display: inline-block; text-align: left; font-size: 0.95rem; color: var(--text-light);">
-                    <li>Faisal Iqbal (478364)</li>
+                    <li>Faisal Iqbal Khattak (478364)</li>
                     <li>Hassan Shahid (464485)</li>
+                    <li>Farooq Shafi (457166)</li>
                     <li>Syed Muneeb ur Rehman Bukhari (465315)</li>
-                    <li>Talha Shafat (460861)</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 2 – Table of Contents -->
+    <!-- SLIDE 2 – Introduction to CaDiCaL -->
     <!-- ============================================================ -->
     <section class="slide" id="slide2">
         <div class="content-box">
-            <h2>Table of Contents</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-                <ol>
-                    <li>What is CaDiCaL?</li>
-                    <li>CaDiCaL at a Glance</li>
-                    <li>What is SAT?</li>
-                    <li>Why SAT Matters</li>
-                    <li>The DPLL Algorithm</li>
-                    <li>CDCL: The Modern Approach</li>
-                    <li>Core CDCL Loop</li>
-                    <li>Key Data Structures</li>
-                    <li>Search Heuristics</li>
-                    <li>Clause Management</li>
-                </ol>
-                <ol start="11">
-                    <li>Preprocessing Techniques</li>
-                    <li>Inprocessing Techniques</li>
-                    <li>Interactive CDCL Demo</li>
-                    <li>Live Demo: Sudoku Solving</li>
-                    <li>C++ API Example</li>
-                    <li>Command-Line Usage</li>
-                    <li>Solver Comparison</li>
-                    <li>Competition Results</li>
-                    <li>What We Learned</li>
-                    <li>Future Directions</li>
-                    <li>Questions &amp; References</li>
-                </ol>
+            <h2>Introduction to CaDiCaL</h2>
+            <ul>
+                <li><strong>What:</strong> An open-source SAT solver that checks if a logical formula can be made true.</li>
+                <li><strong>Who:</strong> Created by <strong>Armin Biere</strong> and his team at the University of Freiburg.</li>
+                <li><strong>Why:</strong> Designed to be <em>easy to read and modify</em> while still being one of the fastest solvers in the world.</li>
+                <li><strong>Language:</strong> Written in C++ (~40,000 lines), MIT license, version 3.0.0.</li>
+            </ul>
+
+            <div class="info-badge">
+                <strong>Key Achievement:</strong> Winner of multiple gold medals at the international SAT Competition.
             </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 3 – What is CaDiCaL? -->
+    <!-- SLIDE 3 – What is SAT? -->
     <!-- ============================================================ -->
     <section class="slide" id="slide3">
         <div class="content-box">
-            <h2>What is CaDiCaL?</h2>
+            <h2>What is SAT?</h2>
             <p>
-                <strong>CaDiCaL</strong> (pronounced &#8220;radical&#8221;) is an open-source, state-of-the-art
-                CDCL-based SAT solver developed by <strong>Armin Biere</strong> and his team at the
-                University of Freiburg (formerly JKU Linz).
+                <strong>SAT (Boolean Satisfiability):</strong> Given a formula made of AND, OR, and NOT over
+                true/false variables, can we find values that make the whole thing <em>true</em>?
             </p>
 
-            <div class="info-badge">
-                <strong>Design Philosophy:</strong> Build a CDCL solver that is <em>easy to understand and modify</em>,
-                while remaining competitive with the fastest solvers in the world.
-            </div>
+            <h3>Simple Example</h3>
+            <pre style="font-size: 0.95rem; padding: 1rem;">
+<span style="color:#6a9955;">c Two variables (x&#8321;, x&#8322;), two rules:</span>
+<span style="color:#dcdcaa;"> Rule 1:  x&#8321; OR x&#8322;      (at least one must be true)</span>
+<span style="color:#dcdcaa;"> Rule 2:  NOT x&#8321;         (x&#8321; must be false)</span>
 
-            <p>
-                It is the successor to the Lingeling solver family and has been published at
-                <strong>CAV 2024</strong> as a tool paper (LNCS vol.&nbsp;14681).
-            </p>
+<span style="color:#6a9955;"> Solution: x&#8321; = false, x&#8322; = true  &#10003;</span></pre>
+
+            <h3>Where is SAT Used?</h3>
+            <ul>
+                <li><strong>Hardware verification</strong> &#8211; checking if circuits work correctly</li>
+                <li><strong>Software testing</strong> &#8211; finding bugs automatically</li>
+                <li><strong>Scheduling</strong> &#8211; solving timetabling and planning problems</li>
+            </ul>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 4 – CaDiCaL at a Glance -->
+    <!-- SLIDE 4 – How It Works: DPLL vs CDCL -->
     <!-- ============================================================ -->
     <section class="slide" id="slide4">
         <div class="content-box">
-            <h2>CaDiCaL at a Glance</h2>
+            <h2>How SAT Solvers Work</h2>
+            <p>SAT solvers have evolved from a simple approach to a much smarter one.</p>
+
+            <h3>The Old Way: DPLL (1962)</h3>
             <ul>
-                <li><strong>Language:</strong> C++ (clean, well-documented)</li>
-                <li><strong>License:</strong> MIT</li>
-                <li><strong>Current Version:</strong> 3.0.0</li>
-                <li><strong>Lines of Code:</strong> ~40,000+</li>
-                <li><strong>Interface:</strong> IPASIR-2 compliant API</li>
+                <li>Pick a variable, guess true or false.</li>
+                <li>If something goes wrong, undo the last guess and try the other value.</li>
+                <li><strong>Problem:</strong> It keeps making the same mistakes because it has no memory.</li>
+            </ul>
+
+            <h3>The Modern Way: CDCL (1996+)</h3>
+            <ul>
+                <li>When a conflict happens, the solver <strong>analyzes why</strong> it went wrong.</li>
+                <li>It <strong>learns a new rule</strong> (clause) so the same mistake never happens again.</li>
+                <li>It <strong>jumps back</strong> directly to the real cause instead of undoing one step at a time.</li>
             </ul>
 
             <div class="info-badge">
-                <strong>Key Achievement:</strong> Winner of multiple SAT Competition gold medals
-                across main and incremental tracks.
+                <strong>Result:</strong> CDCL is orders of magnitude faster than DPLL on real-world problems.
             </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 5 – What is SAT? -->
+    <!-- SLIDE 5 – CaDiCaL's Core Loop -->
     <!-- ============================================================ -->
     <section class="slide" id="slide5">
         <div class="content-box">
-            <h2>What is SAT?</h2>
-            <p>
-                <strong>Boolean Satisfiability (SAT):</strong> Given a propositional formula in
-                Conjunctive Normal Form (CNF), determine if there exists a truth assignment
-                that makes the entire formula <em>true</em>.
-            </p>
+            <h2>CaDiCaL&#8217;s Core Loop</h2>
+            <p>CaDiCaL repeats these four steps until it finds a solution or proves there is none.</p>
 
-            <h3>CNF Example</h3>
-            <pre style="font-size: 0.95rem; padding: 1rem;">
-<span style="color:#6a9955;">c Example: 2 variables, 2 clauses</span>
-<span style="color:#569cd6;">p cnf 2 2</span>
-<span style="color:#dcdcaa;"> 1  2  0</span>       <span style="color:#6a9955;">&#8592; (x&#8321; &#8744; x&#8322;)</span>
-<span style="color:#dcdcaa;">-1     0</span>       <span style="color:#6a9955;">&#8592; (&#172;x&#8321;)</span>
+            <div class="flow-step"><div class="flow-number">1</div><div class="flow-text"><strong>Decide:</strong> Pick a variable and guess a value for it.</div></div>
+            <div class="flow-step"><div class="flow-number">2</div><div class="flow-text"><strong>Propagate:</strong> Apply all forced consequences of that guess automatically.</div></div>
+            <div class="flow-step"><div class="flow-number">3</div><div class="flow-text"><strong>Conflict?</strong> If two rules contradict each other, a conflict is found.</div></div>
+            <div class="flow-step"><div class="flow-number">4</div><div class="flow-text"><strong>Learn &amp; Backjump:</strong> Figure out why the conflict happened, add a new rule to prevent it, and jump back to fix it.</div></div>
 
-<span style="color:#6a9955;">Solution: x&#8321; = false, x&#8322; = true  &#10003;</span></pre>
+            <div class="info-badge">
+                If no conflict occurs and all variables are assigned, the formula is <strong>SATISFIABLE</strong>.
+            </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 6 – Why SAT Matters -->
+    <!-- SLIDE 6 – Smart Search Heuristics -->
     <!-- ============================================================ -->
     <section class="slide" id="slide6">
         <div class="content-box">
-            <h2>Why SAT Matters</h2>
+            <h2>Smart Search Strategies</h2>
+            <p>CaDiCaL uses several tricks to search faster and avoid wasting time.</p>
+
             <ul>
-                <li><strong>Hardware Verification:</strong> Checking circuit correctness</li>
-                <li><strong>Software Testing:</strong> Finding bugs via model checking</li>
-                <li><strong>AI Planning:</strong> Encoding planning problems as SAT</li>
-                <li><strong>Cryptanalysis:</strong> Breaking simple ciphers</li>
-                <li><strong>Scheduling:</strong> Constraint satisfaction in timetabling</li>
+                <li><strong>Activity Scoring (EVSIDS):</strong> Variables that appear in recent conflicts get higher priority &#8212; the solver focuses on the &#8220;trouble spots&#8221; first.</li>
+                <li><strong>Phase Saving:</strong> When a variable is re-visited, it reuses its last assigned value instead of guessing fresh. This avoids redoing work.</li>
+                <li><strong>Restarts:</strong> Periodically wipe the current search and start again from scratch (keeping learned clauses). This prevents getting stuck.</li>
+                <li><strong>Inprocessing:</strong> Between restarts, CaDiCaL simplifies the formula &#8212; removing unnecessary variables and clauses to make future search faster.</li>
             </ul>
 
-            <div class="warning-badge">
-                <p style="margin:0; font-weight: 500;">
-                    SAT is the <strong>first proven NP-complete problem</strong> (Cook-Levin theorem, 1971).
-                    Despite worst-case exponential complexity, modern solvers handle instances
-                    with <strong>millions of variables</strong>.
-                </p>
+            <div class="info-badge">
+                <strong>Fun Fact:</strong> CaDiCaL has over 150 tunable settings, but the defaults work great out of the box.
             </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 7 – The DPLL Algorithm -->
+    <!-- SLIDE 7 – Live Demonstration -->
     <!-- ============================================================ -->
     <section class="slide" id="slide7">
-        <div class="content-box">
-            <h2>The DPLL Algorithm (1962)</h2>
-            <p>Davis-Putnam-Logemann-Loveland &#8212; the foundation of SAT solving.</p>
-            <ul>
-                <li><strong>Unit Propagation:</strong> If a clause has one unset literal, force it true.</li>
-                <li><strong>Pure Literal Elimination:</strong> If a variable appears with only one polarity, assign it.</li>
-                <li><strong>Splitting / Branching:</strong> Pick an unassigned variable, try both values.</li>
-                <li><strong>Chronological Backtracking:</strong> On conflict, undo the last decision.</li>
-            </ul>
-
-            <div class="warning-badge">
-                <p style="margin:0; font-size: 1.05rem;"><strong>Limitation:</strong> Repeats the same mistakes &#8212; no memory of past conflicts.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 8 – CDCL: The Modern Approach -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide8">
-        <div class="content-box">
-            <h2>CDCL: The Modern Approach (1996+)</h2>
-            <p>Conflict-Driven Clause Learning (Marques-Silva &amp; Sakallah).</p>
-            <ul>
-                <li><strong>Conflict Analysis:</strong> On conflict, analyze <em>why</em> it happened.</li>
-                <li><strong>Clause Learning:</strong> Add a new &#8220;learned clause&#8221; to prevent repetition.</li>
-                <li><strong>Non-Chronological Backjumping:</strong> Jump back to the actual cause, skipping irrelevant decisions.</li>
-                <li><strong>Activity-Based Heuristics:</strong> Focus on variables involved in recent conflicts (VSIDS / EVSIDS).</li>
-            </ul>
-
-            <div class="info-badge">
-                <strong>Result:</strong> Orders of magnitude faster than DPLL on structured instances.
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 9 – Core CDCL Loop -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide9">
-        <div class="content-box">
-            <h2>Core CDCL Loop</h2>
-            <p>The main loop that powers CaDiCaL and all modern SAT solvers.</p>
-
-            <div class="flow-step"><div class="flow-number">1</div><div class="flow-text"><strong>Decide:</strong> Pick an unassigned variable using EVSIDS scoring.</div></div>
-            <div class="flow-step"><div class="flow-number">2</div><div class="flow-text"><strong>Propagate:</strong> Apply BCP via two-watched-literal scheme.</div></div>
-            <div class="flow-step"><div class="flow-number">3</div><div class="flow-text"><strong>Conflict?</strong> If a clause becomes empty, a conflict is detected.</div></div>
-            <div class="flow-step"><div class="flow-number">4</div><div class="flow-text"><strong>Analyze:</strong> Trace the implication graph to find the 1-UIP cut.</div></div>
-            <div class="flow-step"><div class="flow-number">5</div><div class="flow-text"><strong>Learn &amp; Backjump:</strong> Add the learned clause, backtrack to assertion level.</div></div>
-            <div class="flow-step"><div class="flow-number">6</div><div class="flow-text"><strong>Restart:</strong> Periodically restart to escape unproductive regions.</div></div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 10 – Key Data Structures -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide10">
-        <div class="content-box">
-            <h2>Key Data Structures</h2>
-            <ul>
-                <li><strong>Two-Watched Literals:</strong> Efficient unit propagation &#8212; only inspect a clause when a watched literal becomes false.</li>
-                <li><strong>Implication Graph:</strong> Tracks which assignments were forced by which clauses. Enables conflict analysis.</li>
-                <li><strong>EVSIDS Scores:</strong> Exponential decay activity scores. Variables in recent conflicts get higher priority.</li>
-                <li><strong>Trail:</strong> Stack of assignments with decision levels. Supports backjumping.</li>
-                <li><strong>Clause Database:</strong> Arena-based allocation for cache efficiency.</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 11 – Search Heuristics -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide11">
-        <div class="content-box">
-            <h2>Search Heuristics</h2>
-            <p>What makes CaDiCaL&#8217;s search strategy stand out.</p>
-            <ul>
-                <li><strong>EVSIDS (Score-based):</strong> Exponential VSIDS with configurable decay factor (default: 0.95).</li>
-                <li><strong>Phase Saving:</strong> Remember last assigned value of each variable for faster convergence.</li>
-                <li><strong>Focused &amp; Stable Modes:</strong> Alternates between aggressive exploration and exploitation phases.</li>
-                <li><strong>Reluctant Doubling Restarts:</strong> Luby-style restart sequence in stable mode.</li>
-            </ul>
-
-            <div class="info-badge">
-                <strong>Configuration:</strong> CaDiCaL has 150+ tunable parameters, but ships with carefully optimized defaults.
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 12 – Clause Management -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide12">
-        <div class="content-box">
-            <h2>Clause Management</h2>
-            <p>How CaDiCaL organizes and prunes its learned clause database.</p>
-            <ul>
-                <li><strong>Glue / LBD Score:</strong> Measures clause quality &#8212; lower glue = more useful. Tier&nbsp;1 (glue &#8804; 2), Tier&nbsp;2 (glue &#8804; 6), Tier&nbsp;3 (rest).</li>
-                <li><strong>Clause Reduction:</strong> Periodically delete low-quality learned clauses to keep the database lean.</li>
-                <li><strong>On-the-fly Subsumption (OTFS):</strong> Strengthen existing clauses during conflict analysis.</li>
-                <li><strong>Chronological Backtracking:</strong> Optionally avoid full backjumps to preserve useful assignments.</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 13 – Preprocessing Techniques -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide13">
-        <div class="content-box">
-            <h2>Preprocessing Techniques</h2>
-            <p>Simplification applied <em>before</em> the search begins.</p>
-
-            <div class="result-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#9999;&#65039;</div>
-                    <h3>Bounded Variable Elimination</h3>
-                    <p>Resolve away variables when the resulting formula is smaller.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128270;</div>
-                    <h3>Subsumption &amp; Strengthening</h3>
-                    <p>Remove clauses subsumed by shorter ones. Remove redundant literals.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128161;</div>
-                    <h3>Failed Literal Probing</h3>
-                    <p>Tentatively assign a literal; if it conflicts, the opposite must be true.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 14 – Inprocessing Techniques -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide14">
-        <div class="content-box">
-            <h2>Inprocessing Techniques</h2>
-            <p>Simplification interleaved <em>during</em> the search &#8212; CaDiCaL&#8217;s key advantage.</p>
-
-            <div class="result-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128268;</div>
-                    <h3>Congruence Closure</h3>
-                    <p>Detect AND, XOR, ITE gate structures. Merge equivalent variables.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128736;&#65039;</div>
-                    <h3>SAT Sweeping</h3>
-                    <p>Detect equivalent variables via simulation + SAT sub-calls.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128260;</div>
-                    <h3>Bounded Variable Addition</h3>
-                    <p>Introduce new variables to reduce total literal occurrences.</p>
-                </div>
-            </div>
-
-            <div class="info-badge" style="margin-top: 15px;">
-                <strong>Key Insight:</strong> After a restart, CaDiCaL may run a round of BVE/subsumption before resuming CDCL search.
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 15 – Interactive CDCL Demonstration -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide15">
-        <div class="content-box">
-            <h2>Interactive CDCL Demonstration</h2>
-            <p>Watch CDCL solve a small formula step-by-step. Click <strong>Step</strong> to advance or <strong>Auto</strong> to animate.</p>
-
-            <div class="demo-container">
-                <div class="demo-header">
-                    <div class="demo-title">CDCL Solver &#8212; (x&#8321; &#8744; x&#8322;) &#8743; (&#172;x&#8321; &#8744; x&#8323;) &#8743; (&#172;x&#8322; &#8744; &#172;x&#8323;) &#8743; (x&#8322; &#8744; x&#8323;)</div>
-                    <div>
-                        <button class="demo-btn" id="btnStep">Step</button>
-                        <button class="demo-btn" id="btnAuto" style="margin-left: 6px;">Auto</button>
-                        <button class="demo-btn" id="btnReset" style="margin-left: 6px; background: #6c757d;">Reset</button>
-                    </div>
-                </div>
-                <div class="demo-log" id="demoLog">
-<span class="step-info">Formula loaded: 3 variables, 4 clauses</span>
-<span class="step-info">Clauses: C1=(x&#8321; &#8744; x&#8322;)  C2=(&#172;x&#8321; &#8744; x&#8323;)  C3=(&#172;x&#8322; &#8744; &#172;x&#8323;)  C4=(x&#8322; &#8744; x&#8323;)</span>
-<span class="step-info">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
-<span class="step-info">Ready. Click "Step" or "Auto" to begin solving...</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 16 – Live Demo: Sudoku Solving -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide16">
         <div class="content-box">
             <h2>Live Demo: Solving a Sudoku Puzzle</h2>
             <p>A 9&#215;9 Sudoku encoded as <strong>729 variables</strong> and <strong>3270 clauses</strong> &#8212; solved in <strong>0.03 seconds</strong>.</p>
@@ -767,77 +512,12 @@ c
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 17 – C++ API Example -->
+    <!-- SLIDE 8 – Solver Comparison -->
     <!-- ============================================================ -->
-    <section class="slide" id="slide17">
-        <div class="content-box">
-            <h2>C++ API Example</h2>
-            <p>CaDiCaL provides a clean, IPASIR-compliant C++ API.</p>
-
-            <pre style="font-size: 0.85rem;">
-<span style="color:#569cd6;">#include</span> <span style="color:#ce9178;">"cadical.hpp"</span>
-
-<span style="color:#569cd6;">int</span> main() {
-  CaDiCaL::Solver solver;
-
-  <span style="color:#6a9955;">// Add clause (x&#8321; &#8744; x&#8322;)</span>
-  solver.<span style="color:#dcdcaa;">add</span>(<span style="color:#b5cea8;">1</span>);
-  solver.<span style="color:#dcdcaa;">add</span>(<span style="color:#b5cea8;">2</span>);
-  solver.<span style="color:#dcdcaa;">add</span>(<span style="color:#b5cea8;">0</span>);  <span style="color:#6a9955;">// terminate clause</span>
-
-  <span style="color:#6a9955;">// Add clause (&#172;x&#8321;)</span>
-  solver.<span style="color:#dcdcaa;">add</span>(<span style="color:#b5cea8;">-1</span>);
-  solver.<span style="color:#dcdcaa;">add</span>(<span style="color:#b5cea8;">0</span>);
-
-  <span style="color:#569cd6;">int</span> res = solver.<span style="color:#dcdcaa;">solve</span>();
-  <span style="color:#6a9955;">// res == 10 &#8594; SATISFIABLE</span>
-
-  <span style="color:#569cd6;">int</span> v1 = solver.<span style="color:#dcdcaa;">val</span>(<span style="color:#b5cea8;">1</span>); <span style="color:#6a9955;">// -1 (false)</span>
-  <span style="color:#569cd6;">int</span> v2 = solver.<span style="color:#dcdcaa;">val</span>(<span style="color:#b5cea8;">2</span>); <span style="color:#6a9955;">//  2 (true)</span>
-
-  <span style="color:#569cd6;">return</span> <span style="color:#b5cea8;">0</span>;
-}</pre>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 18 – Command-Line Usage -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide18">
-        <div class="content-box">
-            <h2>Command-Line Usage</h2>
-            <p>Build and run CaDiCaL from the terminal.</p>
-
-            <pre style="font-size: 0.85rem;">
-<span style="color:#6a9955;"># Build CaDiCaL</span>
-<span style="color:#dcdcaa;">$</span> ./configure <span style="color:#569cd6;">&&</span> make
-
-<span style="color:#6a9955;"># Solve a DIMACS CNF file</span>
-<span style="color:#dcdcaa;">$</span> ./build/cadical example.cnf
-<span style="color:#ce9178;">s SATISFIABLE</span>
-<span style="color:#ce9178;">v 1 -2 0</span>
-
-<span style="color:#6a9955;"># Generate DRAT proof</span>
-<span style="color:#dcdcaa;">$</span> ./build/cadical input.cnf proof.drat
-
-<span style="color:#6a9955;"># Incremental solving via IPASIR</span>
-<span style="color:#dcdcaa;">$</span> solver.<span style="color:#dcdcaa;">assume</span>(<span style="color:#b5cea8;">3</span>);
-<span style="color:#dcdcaa;">$</span> solver.<span style="color:#dcdcaa;">solve</span>();   <span style="color:#6a9955;">// under assumption x&#8323; = true</span>
-<span style="color:#dcdcaa;">$</span> solver.<span style="color:#dcdcaa;">failed</span>(<span style="color:#b5cea8;">3</span>); <span style="color:#6a9955;">// check if x&#8323; in unsat core</span></pre>
-
-            <div class="info-badge" style="margin-top: 15px;">
-                <strong>Return Codes:</strong> <code>10</code> = SATISFIABLE, <code>20</code> = UNSATISFIABLE, <code>0</code> = UNKNOWN.
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 19 – Solver Comparison -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide19">
+    <section class="slide" id="slide8">
         <div class="content-box">
             <h2>Solver Comparison</h2>
-            <p>How CaDiCaL compares to other leading SAT solvers.</p>
+            <p>How CaDiCaL stacks up against other popular SAT solvers.</p>
 
             <table class="comparison-table">
                 <tr>
@@ -845,33 +525,22 @@ c
                     <th>CaDiCaL</th>
                     <th>MiniSat</th>
                     <th>Kissat</th>
-                    <th>Glucose</th>
                 </tr>
                 <tr>
                     <td><strong>Inprocessing</strong></td>
                     <td style="color: #28a745; font-weight:bold;">Yes (full)</td>
                     <td>No</td>
                     <td style="color: #28a745;">Yes</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td><strong>Congruence Closure</strong></td>
-                    <td style="color: #28a745; font-weight:bold;">Yes</td>
-                    <td>No</td>
-                    <td>No</td>
-                    <td>No</td>
                 </tr>
                 <tr>
                     <td><strong>Incremental API</strong></td>
                     <td style="color: #28a745; font-weight:bold;">IPASIR-2</td>
                     <td>Basic</td>
                     <td>No</td>
-                    <td>Limited</td>
                 </tr>
                 <tr>
                     <td><strong>Proof Logging</strong></td>
-                    <td style="color: #28a745; font-weight:bold;">DRAT / LRAT / FRAT</td>
-                    <td>DRAT</td>
+                    <td style="color: #28a745; font-weight:bold;">DRAT / LRAT</td>
                     <td>DRAT</td>
                     <td>DRAT</td>
                 </tr>
@@ -880,103 +549,57 @@ c
                     <td style="color: #28a745; font-weight:bold;">Excellent</td>
                     <td style="color: #28a745;">Excellent</td>
                     <td>Moderate</td>
-                    <td>Moderate</td>
                 </tr>
                 <tr>
-                    <td><strong>Focused/Stable Modes</strong></td>
-                    <td style="color: #28a745; font-weight:bold;">Yes</td>
-                    <td>No</td>
-                    <td style="color: #28a745;">Yes</td>
-                    <td>No</td>
+                    <td><strong>Competition Wins</strong></td>
+                    <td style="color: #28a745; font-weight:bold;">Multiple golds</td>
+                    <td>Historic</td>
+                    <td style="color: #28a745;">Multiple golds</td>
                 </tr>
             </table>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 20 – Competition Results -->
+    <!-- SLIDE 9 – Summary & Reflections -->
     <!-- ============================================================ -->
-    <section class="slide" id="slide20">
+    <section class="slide" id="slide9">
         <div class="content-box">
-            <h2>Competition Results &amp; Impact</h2>
+            <h2>Summary &amp; Reflections</h2>
+            <p>Key takeaways from studying CaDiCaL and SAT solving.</p>
 
-            <div class="result-grid">
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#127942;</div>
-                    <h3>SAT Competition Winner</h3>
-                    <p>Multiple gold medals across main and incremental tracks.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128218;</div>
-                    <h3>CAV 2024 Publication</h3>
-                    <p>Tool paper at the premier formal verification conference.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128295;</div>
-                    <h3>Widely Integrated</h3>
-                    <p>Used inside SMT solvers, model checkers, and proof systems.</p>
-                </div>
-                <div class="result-card">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">&#128187;</div>
-                    <h3>Millions of Variables</h3>
-                    <p>Routinely solves industrial instances at massive scale.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 21 – What We Learned -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide21">
-        <div class="content-box">
-            <h2>What We Learned</h2>
             <ul>
-                <li><strong>CDCL&#8217;s Power:</strong> Clause learning transforms exponential backtracking into practical solving for structured problems.</li>
-                <li><strong>Engineering Matters:</strong> Cache-efficient data structures (arena allocation, watched literals) are crucial for performance.</li>
-                <li><strong>Inprocessing is Key:</strong> Interleaving simplification with search yields significant speedups over pure CDCL.</li>
-                <li><strong>Clean Code Wins:</strong> CaDiCaL proves that readability and performance are not mutually exclusive.</li>
+                <li><strong>Clause learning is powerful:</strong> Instead of blindly guessing, CDCL learns from mistakes and never repeats the same conflict.</li>
+                <li><strong>Simplification matters:</strong> CaDiCaL&#8217;s inprocessing &#8212; simplifying the formula <em>during</em> the search &#8212; gives it a big edge over simpler solvers.</li>
+                <li><strong>Code quality counts:</strong> CaDiCaL shows that clean, readable code and top-tier performance are not mutually exclusive.</li>
+                <li><strong>Real-world impact:</strong> SAT solvers like CaDiCaL are used inside hardware verifiers, SMT solvers, and proof checkers worldwide.</li>
             </ul>
 
             <div class="info-badge">
-                <strong>Takeaway:</strong> CaDiCaL exemplifies how decades of SAT research converge into a solver that
-                balances theoretical soundness, engineering excellence, and practical impact.
+                <strong>Our Takeaway:</strong> Studying CaDiCaL taught us how formal methods theory (propositional logic, resolution)
+                translates directly into high-performance engineering.
             </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 22 – Future Directions -->
+    <!-- SLIDE 10 – Conclusion & Q&A -->
     <!-- ============================================================ -->
-    <section class="slide" id="slide22">
-        <div class="content-box">
-            <h2>Future Directions</h2>
-            <ul>
-                <li><strong>Parallelism:</strong> CaDiCaL is single-threaded &#8212; portfolio/clause-sharing parallelism could help.</li>
-                <li><strong>Machine Learning:</strong> ML-guided branching heuristics could adapt to specific problem families.</li>
-                <li><strong>Parity / Cardinality:</strong> Native support for XOR/cardinality constraints (partially present but limited).</li>
-                <li><strong>Hybrid Approaches:</strong> Combining CDCL with local search (SLS) for satisfiable instances.</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SLIDE 23 – Questions & References -->
-    <!-- ============================================================ -->
-    <section class="slide" id="slide23">
+    <section class="slide" id="slide10">
         <div class="content-box" style="text-align: center;">
-            <h1 style="color: var(--text-color);">Any Questions?</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for your attention.</p>
+            <h1 style="color: var(--text-color);">Thank You &amp; Questions</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                CaDiCaL shows how decades of SAT research come together into a solver that is
+                both <strong>easy to understand</strong> and <strong>fast enough to win competitions</strong>.
+            </p>
 
             <div style="text-align: left; max-width: 800px; margin: 0 auto;">
                 <h3>References</h3>
                 <ol style="font-size: 0.95rem;">
-                    <li>Biere, A. et al. &#8220;CaDiCaL 2.0.&#8221; <em>Proc. CAV 2024</em>, LNCS 14681, pp. 133&#8211;152, Springer.</li>
+                    <li>Biere, A. et al. &#8220;CaDiCaL 2.0.&#8221; <em>Proc. CAV 2024</em>, LNCS 14681, pp.&nbsp;133&#8211;152.</li>
                     <li>Marques-Silva, J.P. &amp; Sakallah, K.A. &#8220;GRASP.&#8221; <em>IEEE Trans. Computers</em>, 1999.</li>
                     <li>E&#233;n, N. &amp; S&#246;rensson, N. &#8220;An Extensible SAT-solver.&#8221; <em>SAT 2003</em>, LNCS 2919.</li>
-                    <li>Audemard, G. &amp; Simon, L. &#8220;Predicting Learnt Clauses Quality.&#8221; <em>IJCAI 2009</em>.</li>
                     <li>CaDiCaL GitHub: <a href="https://github.com/arminbiere/cadical" target="_blank" style="color: var(--primary-color);">github.com/arminbiere/cadical</a></li>
-                    <li>SAT Competition: <a href="https://satcompetition.github.io/" target="_blank" style="color: var(--primary-color);">satcompetition.github.io</a></li>
                 </ol>
             </div>
         </div>
@@ -985,7 +608,6 @@ c
 </div>
 
 <script>
-    // --- Navigation Logic ---
     const container = document.getElementById('container');
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.getElementById('navDots');
@@ -1004,7 +626,7 @@ c
         const scrollPos = container.scrollTop;
         const windowHeight = window.innerHeight;
         const activeIndex = Math.round(scrollPos / windowHeight);
-        
+
         document.querySelectorAll('.dot').forEach((dot, index) => {
             if (index === activeIndex) {
                 dot.classList.add('active');
@@ -1017,85 +639,6 @@ c
     });
 
     setTimeout(() => slides[0].classList.add('active'), 100);
-
-    // --- Interactive CDCL Demo ---
-    (function() {
-        const log = document.getElementById('demoLog');
-        const btnStep = document.getElementById('btnStep');
-        const btnAuto = document.getElementById('btnAuto');
-        const btnReset = document.getElementById('btnReset');
-
-        const steps = [
-            { cls: 'step-decide',    text: '[Decision Level 1] Decide: x\u2081 = TRUE' },
-            { cls: 'step-propagate', text: '[BCP] C2=(\u00ACx\u2081 \u2228 x\u2083): x\u2081=T forces x\u2083 = TRUE' },
-            { cls: 'step-propagate', text: '[BCP] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): x\u2083=T \u2192 watching, no unit yet' },
-            { cls: 'step-decide',    text: '[Decision Level 2] Decide: x\u2082 = TRUE' },
-            { cls: 'step-propagate', text: '[BCP] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): x\u2082=T, x\u2083=T \u2192 all literals FALSE!' },
-            { cls: 'step-conflict',  text: '[CONFLICT] Clause C3 is violated!' },
-            { cls: 'step-info',      text: '[Analyze] Implication graph: x\u2081=T@1 \u2192 x\u2083=T@1, x\u2082=T@2 \u2192 conflict' },
-            { cls: 'step-info',      text: '[1-UIP] First Unique Implication Point found at x\u2082' },
-            { cls: 'step-learn',     text: '[Learn] Learned clause C5 = (\u00ACx\u2082)   \u2190 prevents x\u2082=T when x\u2081=T' },
-            { cls: 'step-backtrack', text: '[Backjump] Non-chronological backtrack to level 0 (assertion level)' },
-            { cls: 'step-propagate', text: '[BCP] C5=(\u00ACx\u2082) \u2192 forces x\u2082 = FALSE at level 0' },
-            { cls: 'step-propagate', text: '[BCP] C4=(x\u2082 \u2228 x\u2083): x\u2082=F \u2192 forces x\u2083 = TRUE at level 0' },
-            { cls: 'step-propagate', text: '[BCP] C1=(x\u2081 \u2228 x\u2082): x\u2082=F \u2192 forces x\u2081 = TRUE at level 0' },
-            { cls: 'step-propagate', text: '[Check] C2=(\u00ACx\u2081 \u2228 x\u2083): x\u2081=T, x\u2083=T \u2192 satisfied \u2713' },
-            { cls: 'step-propagate', text: '[Check] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): x\u2082=F \u2192 satisfied \u2713' },
-            { cls: 'step-sat',       text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
-            { cls: 'step-sat',       text: 'SATISFIABLE  \u2192  x\u2081 = TRUE, x\u2082 = FALSE, x\u2083 = TRUE' },
-            { cls: 'step-sat',       text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
-        ];
-
-        let currentStep = 0;
-        let autoInterval = null;
-        const initialHTML = log.innerHTML;
-
-        function addStep() {
-            if (currentStep >= steps.length) {
-                btnStep.disabled = true;
-                stopAuto();
-                return;
-            }
-            const s = steps[currentStep];
-            log.innerHTML += '\n<span class="' + s.cls + '">' + s.text + '</span>';
-            log.scrollTop = log.scrollHeight;
-            currentStep++;
-        }
-
-        function stopAuto() {
-            if (autoInterval) {
-                clearInterval(autoInterval);
-                autoInterval = null;
-                btnAuto.textContent = 'Auto';
-            }
-        }
-
-        function resetDemo() {
-            stopAuto();
-            currentStep = 0;
-            log.innerHTML = initialHTML;
-            btnStep.disabled = false;
-        }
-
-        btnStep.addEventListener('click', addStep);
-
-        btnAuto.addEventListener('click', () => {
-            if (autoInterval) {
-                stopAuto();
-            } else {
-                btnAuto.textContent = 'Pause';
-                autoInterval = setInterval(() => {
-                    if (currentStep >= steps.length) {
-                        stopAuto();
-                        return;
-                    }
-                    addStep();
-                }, 800);
-            }
-        });
-
-        btnReset.addEventListener('click', resetDemo);
-    })();
 </script>
 
 </body>
