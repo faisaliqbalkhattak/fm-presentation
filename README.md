@@ -4,7 +4,7 @@ A 10-slide interactive web presentation about the **CaDiCaL SAT Solver**, create
 
 ## Live Presentation
 
-👉 **[View the presentation here](https://faisaliqbalkhattak.github.io/fm-presentation/)**
+**[View the presentation here](https://faisaliqbalkhattak.github.io/fm-presentation/)**
 
 ## What's Inside
 
