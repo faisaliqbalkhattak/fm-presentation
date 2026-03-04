@@ -230,6 +230,26 @@
         .demo-log .step-backtrack { color: #e599f7; }
         .demo-log .step-sat { color: #51cf66; font-weight: bold; }
         .demo-log .step-info { color: #74c0fc; }
+
+        .snapshot-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+        .snapshot-panel {
+            background: #1e1e1e; border-radius: 10px; padding: 18px;
+            color: #dcdcdc; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.82rem;
+        }
+        .snapshot-panel h4 { color: #61dafb; margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 1px solid #444; padding-bottom: 6px; }
+        .snapshot-panel table { width: 100%; border-collapse: collapse; }
+        .snapshot-panel th { color: #e5c07b; text-align: left; padding: 4px 8px; font-size: 0.8rem; border-bottom: 1px solid #444; }
+        .snapshot-panel td { padding: 4px 8px; font-size: 0.8rem; border-bottom: 1px solid #333; }
+        .snapshot-panel .val-true { color: #69db7c; font-weight: bold; }
+        .snapshot-panel .val-false { color: #ff6b6b; font-weight: bold; }
+        .snapshot-panel .val-unit { color: #a9e34b; }
+        .snapshot-panel .watched { color: #e5c07b; }
+        .snapshot-log {
+            background: #2d2d2d; border-radius: 10px; padding: 18px;
+            color: #dcdcdc; font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.82rem; white-space: pre-wrap; line-height: 1.55;
+        }
+        .snapshot-log h4 { color: #61dafb; margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 1px solid #444; padding-bottom: 6px; }
     </style>
 </head>
 <body>
@@ -403,9 +423,62 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 8 – Solver Comparison -->
+    <!-- SLIDE 8 – CDCL Snapshot: Internal Data -->
     <!-- ============================================================ -->
     <section class="slide" id="slide8">
+        <div class="content-box" style="padding: 2rem;">
+            <h2>CDCL Snapshot: What the Solver Stores</h2>
+            <p>After one decision and two propagations, here is everything CaDiCaL keeps in memory.</p>
+
+            <div class="snapshot-layout">
+                <!-- LEFT: Solving Log -->
+                <div class="snapshot-log">
+                    <h4>Solving Log</h4>
+<span style="color:#74c0fc;">Formula: C1=(x&#8321;&#8744;x&#8322;) C2=(&#172;x&#8321;&#8744;x&#8323;) C3=(&#172;x&#8322;&#8744;&#172;x&#8323;) C4=(x&#8322;&#8744;x&#8323;)</span>
+<span style="color:#69db7c;">[Decide]     x&#8321; = TRUE          @ level 1</span>
+<span style="color:#a9e34b;">[BCP]  C2 &#8594; x&#8323; = TRUE          @ level 1</span>
+<span style="color:#a9e34b;">[BCP]  C3 &#8594; x&#8322; = FALSE         @ level 1</span>
+<span style="color:#74c0fc;">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
+<span style="color:#51cf66; font-weight:bold;">All clauses satisfied &#8594; SATISFIABLE</span>
+<span style="color:#51cf66; font-weight:bold;">x&#8321;=T, x&#8322;=F, x&#8323;=T</span>
+                </div>
+
+                <!-- RIGHT: Data Structures -->
+                <div class="snapshot-panel">
+                    <h4>Trail (Assignment Stack)</h4>
+                    <table>
+                        <tr><th>Order</th><th>Variable</th><th>Value</th><th>Level</th><th>Reason</th></tr>
+                        <tr><td>1</td><td>x&#8321;</td><td class="val-true">TRUE</td><td>1</td><td>Decision</td></tr>
+                        <tr><td>2</td><td>x&#8323;</td><td class="val-true">TRUE</td><td>1</td><td>C2 (BCP)</td></tr>
+                        <tr><td>3</td><td>x&#8322;</td><td class="val-false">FALSE</td><td>1</td><td>C3 (BCP)</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 16px;">Watched Literals</h4>
+                    <table>
+                        <tr><th>Clause</th><th>Watch 1</th><th>Watch 2</th><th>Status</th></tr>
+                        <tr><td>C1</td><td class="watched">x&#8321;</td><td class="watched">x&#8322;</td><td class="val-true">SAT</td></tr>
+                        <tr><td>C2</td><td class="watched">&#172;x&#8321;</td><td class="watched">x&#8323;</td><td class="val-true">SAT</td></tr>
+                        <tr><td>C3</td><td class="watched">&#172;x&#8322;</td><td class="watched">&#172;x&#8323;</td><td class="val-true">SAT</td></tr>
+                        <tr><td>C4</td><td class="watched">x&#8322;</td><td class="watched">x&#8323;</td><td class="val-true">SAT</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 16px;">Solver State</h4>
+                    <table>
+                        <tr><td>Decisions</td><td class="val-true">1</td></tr>
+                        <tr><td>Propagations</td><td class="val-true">2</td></tr>
+                        <tr><td>Conflicts</td><td class="val-true">0</td></tr>
+                        <tr><td>Learned Clauses</td><td class="val-true">0</td></tr>
+                        <tr><td>Decision Level</td><td class="val-true">1</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 9 – Solver Comparison -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide9">
         <div class="content-box">
             <h2>Solver Comparison</h2>
             <p>How CaDiCaL stacks up against other popular SAT solvers.</p>
@@ -451,9 +524,9 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 9 – Summary & Reflections -->
+    <!-- SLIDE 10 – Summary & Reflections -->
     <!-- ============================================================ -->
-    <section class="slide" id="slide9">
+    <section class="slide" id="slide10">
         <div class="content-box">
             <h2>Summary &amp; Reflections</h2>
             <p>Key takeaways from studying CaDiCaL and SAT solving.</p>
@@ -473,9 +546,9 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 10 – Conclusion & Q&A -->
+    <!-- SLIDE 11 – Conclusion & Q&A -->
     <!-- ============================================================ -->
-    <section class="slide" id="slide10">
+    <section class="slide" id="slide11">
         <div class="content-box" style="text-align: center;">
             <h1 style="color: var(--text-color);">Thank You &amp; Questions</h1>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">
