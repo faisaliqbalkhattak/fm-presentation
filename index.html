@@ -268,9 +268,9 @@
             <h2>Introduction to CaDiCaL</h2>
             <ul>
                 <li><strong>What:</strong> An open-source SAT solver that checks if a logical formula can be made true.</li>
-                <li><strong>Who:</strong> Created by <strong>Armin Biere</strong> and his team at the University of Freiburg.</li>
+                <li><strong>Who:</strong> Created by <strong>Armin Biere</strong> and his team at the Johannes Kepler University Linz.</li>
                 <li><strong>Why:</strong> Designed to be <em>easy to read and modify</em> while still being one of the fastest solvers in the world.</li>
-                <li><strong>Language:</strong> Written in C++ (~40,000 lines), MIT license, version 3.0.0.</li>
+                <li><strong>Language:</strong> Written in C++, MIT license, version 2.0.</li>
             </ul>
 
             <div class="info-badge">
@@ -370,7 +370,7 @@
             </ul>
 
             <div class="info-badge">
-                <strong>Fun Fact:</strong> CaDiCaL has over 150 tunable settings, but the defaults work great out of the box.
+                <strong>Fun Fact:</strong> CaDiCaL has many tunable settings, but the defaults work great out of the box.
             </div>
         </div>
     </section>
@@ -539,20 +539,14 @@
 
         const steps = [
             { cls: 'step-decide',    text: '[Decision Level 1] Decide: x\u2081 = TRUE' },
-            { cls: 'step-propagate', text: '[BCP] C2=(\u00ACx\u2081 \u2228 x\u2083): x\u2081=T forces x\u2083 = TRUE' },
-            { cls: 'step-propagate', text: '[BCP] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): x\u2083=T \u2192 watching, no unit yet' },
-            { cls: 'step-decide',    text: '[Decision Level 2] Decide: x\u2082 = TRUE' },
-            { cls: 'step-propagate', text: '[BCP] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): x\u2082=T, x\u2083=T \u2192 all literals FALSE!' },
-            { cls: 'step-conflict',  text: '[CONFLICT] Clause C3 is violated!' },
-            { cls: 'step-info',      text: '[Analyze] Implication graph: x\u2081=T@1 \u2192 x\u2083=T@1, x\u2082=T@2 \u2192 conflict' },
-            { cls: 'step-info',      text: '[1-UIP] First Unique Implication Point found at x\u2082' },
-            { cls: 'step-learn',     text: '[Learn] Learned clause C5 = (\u00ACx\u2082)   \u2190 prevents x\u2082=T when x\u2081=T' },
-            { cls: 'step-backtrack', text: '[Backjump] Non-chronological backtrack to level 0 (assertion level)' },
-            { cls: 'step-propagate', text: '[BCP] C5=(\u00ACx\u2082) \u2192 forces x\u2082 = FALSE at level 0' },
-            { cls: 'step-propagate', text: '[BCP] C4=(x\u2082 \u2228 x\u2083): x\u2082=F \u2192 forces x\u2083 = TRUE at level 0' },
-            { cls: 'step-propagate', text: '[BCP] C1=(x\u2081 \u2228 x\u2082): x\u2082=F \u2192 forces x\u2081 = TRUE at level 0' },
-            { cls: 'step-propagate', text: '[Check] C2=(\u00ACx\u2081 \u2228 x\u2083): x\u2081=T, x\u2083=T \u2192 satisfied \u2713' },
-            { cls: 'step-propagate', text: '[Check] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): x\u2082=F \u2192 satisfied \u2713' },
+            { cls: 'step-propagate', text: '[BCP] C2=(\u00ACx\u2081 \u2228 x\u2083): \u00ACx\u2081=F \u2192 clause is unit \u2192 x\u2083 = TRUE' },
+            { cls: 'step-propagate', text: '[BCP] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): \u00ACx\u2083=F \u2192 clause is unit \u2192 x\u2082 = FALSE' },
+            { cls: 'step-info',      text: '[Trail] x\u2081=T@1, x\u2083=T@1, x\u2082=F@1   (all assigned at level 1)' },
+            { cls: 'step-propagate', text: '[Check] C1=(x\u2081 \u2228 x\u2082): x\u2081=T \u2192 satisfied \u2713' },
+            { cls: 'step-propagate', text: '[Check] C2=(\u00ACx\u2081 \u2228 x\u2083): x\u2083=T \u2192 satisfied \u2713' },
+            { cls: 'step-propagate', text: '[Check] C3=(\u00ACx\u2082 \u2228 \u00ACx\u2083): \u00ACx\u2082=T \u2192 satisfied \u2713' },
+            { cls: 'step-propagate', text: '[Check] C4=(x\u2082 \u2228 x\u2083): x\u2083=T \u2192 satisfied \u2713' },
+            { cls: 'step-info',      text: 'All clauses satisfied. No conflict \u2014 no learning needed!' },
             { cls: 'step-sat',       text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
             { cls: 'step-sat',       text: 'SATISFIABLE  \u2192  x\u2081 = TRUE, x\u2082 = FALSE, x\u2083 = TRUE' },
             { cls: 'step-sat',       text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
