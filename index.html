@@ -423,53 +423,28 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SLIDE 8 – CDCL Snapshot: Internal Data -->
+    <!-- SLIDE 8 – Interactive CDCL Demo 2: UNSAT -->
     <!-- ============================================================ -->
     <section class="slide" id="slide8">
-        <div class="content-box" style="padding: 2rem;">
-            <h2>CDCL Snapshot: What the Solver Stores</h2>
-            <p>After one decision and two propagations, here is everything CaDiCaL keeps in memory.</p>
+        <div class="content-box">
+            <h2>Interactive CDCL: An UNSAT Example</h2>
+            <p>Now watch CDCL prove a formula has <strong>no solution</strong> — learning a clause, backjumping, and hitting a dead end.</p>
 
-            <div class="snapshot-layout">
-                <!-- LEFT: Solving Log -->
-                <div class="snapshot-log">
-                    <h4>Solving Log</h4>
-<span style="color:#74c0fc;">Formula: C1=(x&#8321;&#8744;x&#8322;) C2=(&#172;x&#8321;&#8744;x&#8323;) C3=(&#172;x&#8322;&#8744;&#172;x&#8323;) C4=(x&#8322;&#8744;x&#8323;)</span>
-<span style="color:#69db7c;">[Decide]     x&#8321; = TRUE          @ level 1</span>
-<span style="color:#a9e34b;">[BCP]  C2 &#8594; x&#8323; = TRUE          @ level 1</span>
-<span style="color:#a9e34b;">[BCP]  C3 &#8594; x&#8322; = FALSE         @ level 1</span>
-<span style="color:#74c0fc;">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
-<span style="color:#51cf66; font-weight:bold;">All clauses satisfied &#8594; SATISFIABLE</span>
-<span style="color:#51cf66; font-weight:bold;">x&#8321;=T, x&#8322;=F, x&#8323;=T</span>
+            <div class="demo-container">
+                <div class="demo-header">
+                    <div class="demo-title">CDCL Solver &#8212; 4 vars, 6 clauses (UNSAT)</div>
+                    <div>
+                        <button class="demo-btn" id="btnStep2">Step</button>
+                        <button class="demo-btn" id="btnAuto2" style="margin-left: 6px;">Auto</button>
+                        <button class="demo-btn" id="btnReset2" style="margin-left: 6px; background: #6c757d;">Reset</button>
+                    </div>
                 </div>
-
-                <!-- RIGHT: Data Structures -->
-                <div class="snapshot-panel">
-                    <h4>Trail (Assignment Stack)</h4>
-                    <table>
-                        <tr><th>Order</th><th>Variable</th><th>Value</th><th>Level</th><th>Reason</th></tr>
-                        <tr><td>1</td><td>x&#8321;</td><td class="val-true">TRUE</td><td>1</td><td>Decision</td></tr>
-                        <tr><td>2</td><td>x&#8323;</td><td class="val-true">TRUE</td><td>1</td><td>C2 (BCP)</td></tr>
-                        <tr><td>3</td><td>x&#8322;</td><td class="val-false">FALSE</td><td>1</td><td>C3 (BCP)</td></tr>
-                    </table>
-
-                    <h4 style="margin-top: 16px;">Watched Literals</h4>
-                    <table>
-                        <tr><th>Clause</th><th>Watch 1</th><th>Watch 2</th><th>Status</th></tr>
-                        <tr><td>C1</td><td class="watched">x&#8321;</td><td class="watched">x&#8322;</td><td class="val-true">SAT</td></tr>
-                        <tr><td>C2</td><td class="watched">&#172;x&#8321;</td><td class="watched">x&#8323;</td><td class="val-true">SAT</td></tr>
-                        <tr><td>C3</td><td class="watched">&#172;x&#8322;</td><td class="watched">&#172;x&#8323;</td><td class="val-true">SAT</td></tr>
-                        <tr><td>C4</td><td class="watched">x&#8322;</td><td class="watched">x&#8323;</td><td class="val-true">SAT</td></tr>
-                    </table>
-
-                    <h4 style="margin-top: 16px;">Solver State</h4>
-                    <table>
-                        <tr><td>Decisions</td><td class="val-true">1</td></tr>
-                        <tr><td>Propagations</td><td class="val-true">2</td></tr>
-                        <tr><td>Conflicts</td><td class="val-true">0</td></tr>
-                        <tr><td>Learned Clauses</td><td class="val-true">0</td></tr>
-                        <tr><td>Decision Level</td><td class="val-true">1</td></tr>
-                    </table>
+                <div class="demo-log" id="demoLog2">
+<span class="step-info">Formula loaded: 4 variables, 6 clauses</span>
+<span class="step-info">C1=(x&#8321; &#8744; x&#8322;)  C2=(&#172;x&#8321; &#8744; x&#8323;)  C3=(&#172;x&#8322; &#8744; x&#8323;)</span>
+<span class="step-info">C4=(&#172;x&#8323; &#8744; x&#8324;)  C5=(&#172;x&#8323; &#8744; &#172;x&#8324;)  C6=(&#172;x&#8324; &#8744; x&#8322;)</span>
+<span class="step-info">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span>
+<span class="step-info">Ready. Click "Step" or "Auto" to begin...</span>
                 </div>
             </div>
         </div>
@@ -623,6 +598,85 @@
             { cls: 'step-sat',       text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
             { cls: 'step-sat',       text: 'SATISFIABLE  \u2192  x\u2081 = TRUE, x\u2082 = FALSE, x\u2083 = TRUE' },
             { cls: 'step-sat',       text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
+        ];
+
+        let currentStep = 0;
+        let autoInterval = null;
+        const initialHTML = log.innerHTML;
+
+        function addStep() {
+            if (currentStep >= steps.length) {
+                btnStep.disabled = true;
+                stopAuto();
+                return;
+            }
+            const s = steps[currentStep];
+            log.innerHTML += '\n<span class="' + s.cls + '">' + s.text + '</span>';
+            log.scrollTop = log.scrollHeight;
+            currentStep++;
+        }
+
+        function stopAuto() {
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                btnAuto.textContent = 'Auto';
+            }
+        }
+
+        function resetDemo() {
+            stopAuto();
+            currentStep = 0;
+            log.innerHTML = initialHTML;
+            btnStep.disabled = false;
+        }
+
+        btnStep.addEventListener('click', addStep);
+
+        btnAuto.addEventListener('click', () => {
+            if (autoInterval) {
+                stopAuto();
+            } else {
+                btnAuto.textContent = 'Pause';
+                autoInterval = setInterval(() => {
+                    if (currentStep >= steps.length) {
+                        stopAuto();
+                        return;
+                    }
+                    addStep();
+                }, 800);
+            }
+        });
+
+        btnReset.addEventListener('click', resetDemo);
+    })();
+
+    // --- Interactive CDCL Demo 2 (UNSAT) ---
+    (function() {
+        const log = document.getElementById('demoLog2');
+        const btnStep = document.getElementById('btnStep2');
+        const btnAuto = document.getElementById('btnAuto2');
+        const btnReset = document.getElementById('btnReset2');
+
+        const steps = [
+            { cls: 'step-decide',    text: '[Decision Level 1] Decide: x\u2081 = TRUE' },
+            { cls: 'step-propagate', text: '[BCP] C2=(\u00ACx\u2081 \u2228 x\u2083): \u00ACx\u2081=F \u2192 unit \u2192 x\u2083 = TRUE @ level 1' },
+            { cls: 'step-propagate', text: '[BCP] C4=(\u00ACx\u2083 \u2228 x\u2084): \u00ACx\u2083=F \u2192 unit \u2192 x\u2084 = TRUE @ level 1' },
+            { cls: 'step-conflict',  text: '[CONFLICT] C5=(\u00ACx\u2083 \u2228 \u00ACx\u2084): x\u2083=T, x\u2084=T \u2192 both literals FALSE!' },
+            { cls: 'step-info',      text: '[Analyze] Implication graph: x\u2081@1 \u2192 x\u2083@1 \u2192 x\u2084@1 \u2192 conflict' },
+            { cls: 'step-info',      text: '[Resolve] C5=(\u00ACx\u2083 \u2228 \u00ACx\u2084) with reason[x\u2084]=C4=(\u00ACx\u2083 \u2228 x\u2084)' },
+            { cls: 'step-learn',     text: '[Learn] Learned clause L1 = (\u00ACx\u2083)  \u2190 1-UIP cut' },
+            { cls: 'step-backtrack', text: '[Backjump] Backtrack to level 0 (assertion level)' },
+            { cls: 'step-info',      text: '[Trail] cleared. Now apply learned clause...' },
+            { cls: 'step-propagate', text: '[BCP] L1=(\u00ACx\u2083): unit clause \u2192 x\u2083 = FALSE @ level 0' },
+            { cls: 'step-propagate', text: '[BCP] C2=(\u00ACx\u2081 \u2228 x\u2083): x\u2083=F \u2192 unit \u2192 x\u2081 = FALSE @ level 0' },
+            { cls: 'step-propagate', text: '[BCP] C3=(\u00ACx\u2082 \u2228 x\u2083): x\u2083=F \u2192 unit \u2192 x\u2082 = FALSE @ level 0' },
+            { cls: 'step-info',      text: '[Trail] x\u2083=F@0, x\u2081=F@0, x\u2082=F@0' },
+            { cls: 'step-conflict',  text: '[CONFLICT] C1=(x\u2081 \u2228 x\u2082): x\u2081=F, x\u2082=F \u2192 all literals FALSE!' },
+            { cls: 'step-conflict',  text: '[LEVEL 0 CONFLICT] No decisions left to undo!' },
+            { cls: 'step-conflict',  text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
+            { cls: 'step-conflict',  text: 'UNSATISFIABLE \u2014 no valid assignment exists' },
+            { cls: 'step-conflict',  text: '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550' },
         ];
 
         let currentStep = 0;
